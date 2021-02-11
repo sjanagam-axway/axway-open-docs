@@ -22,7 +22,7 @@ An endpoint can be published to catalog in two ways.
 * **Description** is limited to 1000 characters.
 * **State** Published endpoints will be available for developers and consumers, where as Unpublished endpoints are only available for developers.
 * **Visibility** Public endpoints will be visible to the entire organization, where as Restricted endpoints will be visible only to the owning team.  
-* **Version Name** Name of the version being to which endpoint belongs to.
+* **Version Name** Name of the version being to which the endpoint belongs to.
 * **Endpoint Name** Name of the endpoint being published.
 
 
