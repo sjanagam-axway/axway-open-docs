@@ -28,4 +28,3 @@ An endpoint can be published to catalog in two ways.
 ### Errors and debugging
 
 In the event, there is an error while publishing to catalog. The form page will have a large error box explaining what caused the error. The error may contain references to objects only found when using the CLI or API directly. In this case please refer to the [amplify CLI](/docs/central/cli_central/cli_publish) documentation for further guidance.
-
