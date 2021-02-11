@@ -1,9 +1,9 @@
 {
 "title": "Configure WebSocket connections",
-"linkTitle": "Configure WebSocket connections",
-"weight": 3,
-"date": "2019-10-17",
-"description": "Configure API Gateway to act as a WebSocket proxy."
+  "linkTitle": "Configure WebSocket connections",
+  "weight": 3,
+  "date": "2019-10-17",
+  "description": "Configure API Gateway to act as a WebSocket proxy."
 }
 
 ## WebSocket protocol overview
@@ -12,16 +12,12 @@ The WebSocket protocol provides an extension to the HTTP 1.1 protocol to establi
 
 The WebSocket protocol can be summarized as follows:
 
-1. To establish a communication channel between a client and a server, the client needs to send an HTTP `Upgrade`
-    request to the server. This is known as the WebSocket protocol handshake.
-2. If the server is capable and willing to upgrade the connection, it sends a HTTP `101`
-    response to the requesting client. At this point the handshake is considered successful and the connection between the server and the client is upgraded to the WebSocket protocol.
+1. To establish a communication channel between a client and a server, the client needs to send an HTTP `Upgrade` request to the server. This is known as the WebSocket protocol handshake.
+2. If the server is capable and willing to upgrade the connection, it sends a HTTP `101` response to the requesting client. At this point the handshake is considered successful and the connection between the server and the client is upgraded to the WebSocket protocol.
 
-    As soon as the client receives the HTTP `101` response the connection is no longer considered an HTTP connection.
-
+   As soon as the client receives the HTTP `101` response the connection is no longer considered an HTTP connection.
 3. Messages can now flow bidirectionally between the server and the client over the WebSocket connection.
-4. Any participant in the data exchange can request the WebSocket connection be terminated by sending a `Close`
-    request to the other participant.
+4. Any participant in the data exchange can request the WebSocket connection be terminated by sending a `Close` request to the other participant.
 
 For a detailed description of the protocol, see [RFC 6455](http://tools.ietf.org/html/rfc6455).
 
@@ -31,52 +27,36 @@ API Gateway can act as a WebSocket proxy, whereby it is deployed in front of a W
 
 ### WebSocket configuration settings
 
-Configure the following fields on the **WebSocket configuration**
-dialog:
+Configure the following fields on the **WebSocket configuration** dialog:
 
-**Enable this path resolver**:
-Select or deselect the check box to enable or disable the WebSocket handler. It is enabled by default.
+**Enable this path resolver**: Select or deselect the check box to enable or disable the WebSocket handler. It is enabled by default.
 
 #### Policies settings
 
-You can assign specific policies on this tab to specific URIs that define the WebSocket endpoints. For example, you might need to handle frames being exchanged between a client and `ws://example.org/echo`
-differently to frames being exchanged between a client and `ws://example.org/voip`.
+You can assign specific policies on this tab to specific URIs that define the WebSocket endpoints. For example, you might need to handle frames being exchanged between a client and `ws://example.org/echo` differently to frames being exchanged between a client and `ws://example.org/voip`.
 
 {{< alert title="Note" color="primary" >}}In the above scenario, different sets of policies need to be defined for each URI (`/echo`
 and `/voip`). This requires different relative paths. For more information on relative paths, see [Configure relative paths](/docs/apim_policydev/apigw_gw_instances/general_relative_path/).{{< /alert >}}
 
-**When a request arrives that matches the path**:
-Enter the path on which WebSocket connections are to be accepted. This defines the URI of the WebSocket endpoint. A relative path resolver for this path must already exist.
+**When a request arrives that matches the path**: Enter the path on which WebSocket connections are to be accepted. This defines the URI of the WebSocket endpoint. A relative path resolver for this path must already exist.
 
-**Default MIME type for message body**:
-Enter the MIME type of the messages. The default is `application/json`.
+**Default MIME type for message body**: Enter the MIME type of the messages. The default is `application/json`.
 
 When messages are flowing bidirectionally between a WebSocket server and client, they are no longer HTTP messages and as such they do not contain a Content type header. For API Gateway to process the content of the message it needs to know what type of content the message is. This field enables you to specify the type of message being exchanged between the server and the client.
 
-**On Upgrade request from client**:
-Click the browse button to select a policy to be used by API Gateway when an `Upgrade`
-request is received.
+**On Upgrade request from client**: Click the browse button to select a policy to be used by API Gateway when an `Upgrade` request is received.
 
-This policy is executed when a connection is being upgraded from HTTP to WebSocket. For example, you might statically route all WebSocket requests to `ws://example.org`
-to `wss://example.com`
-by using a policy. A policy for an HTTP connection must be provided and this policy must provide a mechanism to connect to the remote server.
+This policy is executed when a connection is being upgraded from HTTP to WebSocket. For example, you might statically route all WebSocket requests to `ws://example.org` to `wss://example.com` by using a policy. A policy for an HTTP connection must be provided and this policy must provide a mechanism to connect to the remote server.
 
-For example, to route all requests to `ws://example.org`
-to `wss://example.com`, you can use the **Static Router**
-filter. Similarly, for dynamic routing you can use the **Dynamic Router**
-or **Connect to URL**
-filters. In the latter case, the remote host that the client is attempting to connect to can be extracted from the Host header of the request. This value can then be passed to the **Connect to URL**
-filter and used by that filter to establish a connection to the remote host.
+For example, to route all requests to `ws://example.org` to `wss://example.com`, you can use the **Static Router** filter. Similarly, for dynamic routing you can use the **Dynamic Router** or **Connect to URL** filters. In the latter case, the remote host that the client is attempting to connect to can be extracted from the Host header of the request. This value can then be passed to the **Connect to URL** filter and used by that filter to establish a connection to the remote host.
 
 {{< alert title="Note" color="primary" >}}In the routing filter, you must use `http://` or `https://` URLs as API Gateway does not recognize `ws://` and `wss://` URLs.{{< /alert >}}
 
 The on upgrade policy is also a good place to perform authentication and authorization of the requesting client.
 
-**On WebSocket communication from client**:
-Click the browse button to select a policy to be used by API Gateway when frames are received from the WebSocket client.
+**On WebSocket communication from client**: Click the browse button to select a policy to be used by API Gateway when frames are received from the WebSocket client.
 
-**On WebSocket communication from server**:
-Click the browse button to select a policy to be used by API Gateway when frames are received from the WebSocket server.
+**On WebSocket communication from server**: Click the browse button to select a policy to be used by API Gateway when frames are received from the WebSocket server.
 
 {{< alert title="Note" color="primary" >}}After a successful upgrade request, the context used to upgrade the connection from HTTP to WebSocket protocol is accessible to the policies called for specific frames. This context is not shared between different WebSocket connections and it is destroyed when the connection is closed. The context contains all the message attributes (including authorization and authentication data) used by the upgrade request. This context should be accessed by the server and client policies in read-only mode. {{< /alert >}}
 
@@ -84,8 +64,7 @@ The following figure shows the flow of messages between the client, API Gateway,
 
 ![Sequence diagram showing flow of messages for WebSocket communication](/Images/docbook/images/general/websocket_sequence.png)
 
-**Connection expire time**:
-Enter a numerical value and choose the units from the list. The available options are seconds, minutes, hours, and days. The default value is `0`, which means unlimited.
+**Connection expire time**: Enter a numerical value and choose the units from the list. The available options are seconds, minutes, hours, and days. The default value is `0`, which means unlimited.
 
 This is the absolute time for the connection to be active. For example, if this value is set to 1 hour, then after 1 hour the connection is dropped by API Gateway even if the connection is still active (frames are being sent).
 
@@ -101,20 +80,14 @@ For details on the fields on this tab, see [CORS settings](/docs/apim_policydev/
 
 ## Monitor a WebSocket connection
 
-You can use the API Gateway Manager web console to monitor WebSocket traffic. You can view the initial HTTP `Upgrade`
-request and response on the **Traffic > HTTP**
-tab. You can view all the WebSocket frames processed by API Gateway on the **Traffic > WebSockets**
-tab.
+You can use the API Gateway Manager web console to monitor WebSocket traffic. You can view the initial HTTP `Upgrade` request and response on the **Traffic > HTTP** tab. You can view all the WebSocket frames processed by API Gateway on the **Traffic > WebSockets** tab.
 
 To view all the WebSocket frames processed by API Gateway in API Gateway Manager, follow these steps:
 
-1. Click the **Traffic**
-    button at the top of the window.
-2. Click the **WebSockets**
-    tab. A view of all WebSocket frames sent from or received by API Gateway is displayed.
+1. Click the **Traffic** button at the top of the window.
+2. Click the **WebSockets** tab. A view of all WebSocket frames sent from or received by API Gateway is displayed.
 
-    A message might consist of one or more frames.
-
+   A message might consist of one or more frames.
 3. Click a message frame to see a detailed view of the content. For example, if you click a frame sent from the client to the server, the origin, opcode (interpretation of the payload data), duration, length of the data, key used to mask the data, and payload itself are shown.
 
 ## WebSocket connection example
@@ -168,18 +141,15 @@ This example does not use any policies to handle data frames.
 
 ### Create a WebSocket handler
 
-To enable API Gateway to accept an HTTP `Upgrade`
-request from a client you must add a WebSocket handler to your API Gateway configuration and configure it with the HTTP path that the upgrade can be expected on.
+To enable API Gateway to accept an HTTP `Upgrade` request from a client you must add a WebSocket handler to your API Gateway configuration and configure it with the HTTP path that the upgrade can be expected on.
 
 To add a WebSocket handler, follow these steps:
 
 1. In the Policy Studio tree, select a list of relative paths (for example, **Environment Configuration** > **Listeners > API Gateway > Default Services > Paths**).
-2. In the **Resolvers**
-    window on the right, click **Add > WebSocket**
-    to display the **WebSocket configuration**
-    dialog.
+2. In the **Resolvers** window on the right, click **Add > WebSocket** to display the **WebSocket configuration** dialog.
 3. Configure the WebSocket as follows:
-    ![WebSocket handler example](/Images/docbook/images/general/websocket_handler.png)
+
+![WebSocket handler example](/Images/docbook/images/general/websocket_handler.png)
 
 {{< alert title="Note" color="primary" >}}Ensure that you have not set `gzip` or `deflate` compression, as it is not compatible for WebSocket connections.{{< /alert >}}
 
@@ -189,9 +159,7 @@ To test the WebSocket connection, follow these steps:
 
 1. Deploy the configuration on the API Gateway instance. Click the Deploy button on the toolbar in Policy Studio or press **F6**.
 2. Go to <https://www.websocket.org/echo.html> (a test WebSocket client).
-3. Enter the address of your API Gateway WebSocket proxy in the **Location** field and follow the instructions to connect and send messages. For example:
-    ![WebSocket test](/Images/docbook/images/general/websocket_test_client.png)
-4. View the traffic in API Gateway Manager. For example:
-    ![HTTP traffic in API Gateway Manager](/Images/docbook/images/general/websocket_http_traffic.png)
+3. Enter the address of your API Gateway WebSocket proxy in the **Location** field and follow the instructions to connect and send messages. For example: ![WebSocket test](/Images/docbook/images/general/websocket_test_client.png)
+4. View the traffic in API Gateway Manager. For example: ![HTTP traffic in API Gateway Manager](/Images/docbook/images/general/websocket_http_traffic.png)
 
-    ![WebSocket traffic in API Gateway Manager](/Images/docbook/images/general/websocket_traffic.png)
+   ![WebSocket traffic in API Gateway Manager](/Images/docbook/images/general/websocket_traffic.png)

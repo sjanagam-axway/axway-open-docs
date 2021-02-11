@@ -34,6 +34,10 @@ To install WSL on Windows 10, follow the [WSL installation guide on Microsoft Do
 
 It is important that you complete all of the steps in the WSL installation guide before proceeding.
 
+{{% alert title="Tip" %}}
+Learn how to configure your Ubuntu WSL shell in [Ubuntu tips](/docs/contribution_guidelines/setup_work_locally/#tips-for-configuring-ubuntu-wsl).
+{{% /alert %}}
+
 #### Gitbash on Windows
 
 If for some reason you cannot use WSL or another Linux distribution, you can install and use [Gitbash for Windows](https://git-scm.com/download/win). In this case, you will need to use the Gitbash terminal to enter commands instead of the WSL terminal.
@@ -112,6 +116,24 @@ Do not use `sudo apt-get install hugo` to install on Linux, as it does not alway
 
 For full installation instructions for other platforms, see [Install Hugo](https://gohugo.io/getting-started/installing/).
 
+#### Upgrade Hugo
+
+To upgrade to a later version of Hugo, for example v0.66.0, enter the following commands to install the later version over your existing version:
+
+```
+wget https://github.com/gohugoio/hugo/releases/download/v0.66.0/hugo_extended_0.66.0_Linux-64bit.deb
+sudo dpkg -i hugo_extended_0.66.0_Linux-64bit.deb
+```
+
+To verify what version of Hugo you are running, enter:
+
+```
+$ which hugo
+/usr/local/bin/hugo
+$ hugo version
+Hugo Static Site Generator v0.66.0-78C3C78F/extended linux/amd64 BuildDate: 2020-03-03T15:28:32Z
+```
+
 ### Install NodeJS and PostCSS
 
 You need a recent version (10.x or later) of [NodeJS](https://nodejs.org/en/) so you can use `npm` to install PostCSS.
@@ -159,6 +181,134 @@ When you are ready for your changes to be reviewed:
 
 1. In your Git CLI client, `add`, `commit`, and `push` your files to the remote Git repo.
 2. Create a pull request to enable a site maintainer to review the changes you made on your feature branch or fork and _pull_ them into the original Axway repository.
+
+## Protect sensitive information
+
+Install `git-secrets` on your repository to prevent committing secrets and credentials. For more information, see [git-secrets](https://github.com/awslabs/git-secrets).
+
+To install `git-secrets`:
+
+1. Open an Ubuntu WSL window, and change the directory to `axway-open-docs`:
+
+    ```
+    cd axway-open-docs
+    ```
+
+2. Run the script. You will be asked for your Ubuntu password:
+
+    ```
+    bash scripts/git_secrets_setup.sh
+    ```
+
+    You should see a result similar to:
+
+    ```
+    Clone/update the git-secrets
+    Install git-secrets
+    [sudo] password for amussap:
+    Registering git-secrets as a global option
+    Install the git hooks to use with git-secrets
+    Success!
+    ```
+
+### Test git-secrets
+
+To verify that your `git-secrets` installation is working:
+
+1. Create a feature branch:
+
+    ```
+    git checkout -b testgitsecrets
+    ```
+
+2. Create or change a file, for example, adding an AWS secret or credential to it.
+3. Try to commit your change:
+
+    ```
+    git add .
+    git commit -m "add AWS key to my page"
+    ```
+
+    You should see an error similar to:
+
+    ```
+    content/en/docs/contribution_guidelines/testgitsecrets.md:5:AWS_AUTH_ACCESSKEY = <Your AWS authorization key>
+    [ERROR] Matched one or more prohibited patterns
+    Possible mitigations:
+    - Mark false positives as allowed using: git config --add secrets.allowed ...
+    - Mark false positives as allowed by adding regular expressions to .gitallowed at repository's root directory
+    - List your configured patterns: git config --get-all secrets.patterns
+    - List your configured allowed patterns: git config --get-all secrets.allowed
+    - List your configured allowed patterns in .gitallowed at repository's root directory
+    - Use --no-verify if this is a one-time false positive
+    ```
+
+## Tips for configuring Ubuntu WSL
+
+If you are used to working on Windows, Ubuntu WSL can be hard to get used to at first. Follow these tips to make working in Ubuntu easier.
+
+### Work with Windows files from Ubuntu
+
+In Ubuntu WSL your Windows file system (your `c:` drive) is available under the location `/mnt/c`, so for example to access your `Documents` folder on Windows you have to `cd` to `/mnt/c/Users/WINDOWS_USERNAME/Documents/` on WSL.
+
+To make it easier to access Windows files from Ubuntu, you can set up symlinks as follows:
+
+1. Open an Ubuntu WSL window. By default it opens in your Ubuntu home directory (`/home/USERNAME` or the shortcut `~`).
+2. Create a symlink to your Windows `Documents` directory:
+
+    ```
+    ln -s /mnt/c/Users/WINDOWS_USERNAME/Documents ~/docs
+    ```
+
+    This creates a symbolic link to `/mnt/c/Users/WINDOWS_USERNAME/Documents` from `~/docs`. The command does not print any output.
+
+3. After the symlink is created, you can change to your Windows `Documents` directory using the `docs` alias.
+
+    From your home directory in Ubuntu, enter:
+
+    ```
+    cd docs
+    ```
+
+    Or from any other directory, enter:
+
+    ```
+    cd ~/docs
+    ```
+
+4. Repeat step 2 to create additional symlinks to the Windows directories that you use most often.
+
+### Configure the Ubuntu prompt
+
+1. Download the file [`git-prompt.sh`](https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh) and save it to your `Documents` directory on Windows. To download the file, right-click the **Raw** button at the top of the file and select **Save link as...**, and then open the file to check that it contains only the raw text and not HTML.
+2. Open an Ubuntu WSL window.
+3. Copy the `git-prompt.sh` file to the home directory in your Ubuntu file system and rename it as `.git-prompt.sh`:
+
+    ```
+    cd ~
+    cp /mnt/c/Users/WINDOWS_USERNAME/Documents/git-prompt.sh .git-prompt.sh
+    ```
+
+4. Launch Visual Studio Code from Ubuntu:
+
+    ```
+    code .
+    ```
+
+5. Open the file `.bashrc` in VSCode. This file already exists in your Ubuntu home directory and is run each time you open an Ubuntu window to initialize your shell environment.
+6. Paste the following lines at the end of the file:
+
+    ```
+    if [ -f ~/.git-prompt.sh ]; then
+        source ~/.git-prompt.sh
+        export GIT_PS1_SHOWDIRTYSTATE=1
+        export PS1='\u@\h \[\033[38;5;11m\]\w\[\033[38;5;14m\]$(__git_ps1 " (%s)")\[\033[00m\]$ '
+    fi
+    ```
+
+7. Close the current Ubuntu WSL window and open a new one. This forces Ubuntu to load the changes in `.bashrc`.
+
+After completing these steps, the command prompt in Ubuntu shows useful information such as the current Git branch, the status of the working directory, and so on.
 
 ## Learn more
 

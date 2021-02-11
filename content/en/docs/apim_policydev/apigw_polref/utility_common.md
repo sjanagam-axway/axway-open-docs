@@ -12,8 +12,7 @@ The **String Replace**
 filter enables you to replace all or part of the value of a specified message attribute. You can use this filter to replace any specified string or substring in a message attribute. For example, changing the `from`
 attribute in an email, or changing all or part of a URL.
 
-To configure the **String Replace**
-filter, specify the following fields:
+To configure the **String Replace** filter, specify the following fields:
 
 **Name**: Enter the name of the filter to be displayed in a policy.
 

@@ -1,7 +1,7 @@
 {
     "title": "Promote managed APIs between environments",
     "linkTitle": "Promote managed APIs between environments",
-    "weight": "12",
+    "weight": "120",
     "date": "2019-09-17",
     "description": "Different approaches you can use to promote APIs between environments."
 }
@@ -14,7 +14,7 @@ Alternatively, you can use one of these approaches:
 * Use a promotion policy that you have configured in Policy Studio to automate promotion between environments.
 * When APIs have been developed using Policy Studio, you can also promote them between environments using the API Gateway mechanism for promotion and deployment of standard API Gateway configuration.
 
-{{< alert title="Tip" color="primary" >}}Another alternative is to use the `swagger-promote` tool to follow an APIs as code approach. Store your API definition (Swagger or WSDL) plus a meta data configuration file in your version control system, and a CI/CD pipeline replicates it into API Manager in the state you want. For details, go to [`swagger-promote` tool on GitHub](https://github.com/Axway-API-Management-Plus/apimanager-swagger-promote).{{< /alert >}}
+{{< alert title="Tip" color="primary" >}}Another alternative is to use the `apim-cli` tool to follow an APIs as code approach. Store your API definition (Swagger or WSDL) plus a meta data configuration file in your version control system, and a CI/CD pipeline replicates it into API Manager in the state you want. For details, go to [`apim-cli` tool on GitHub](https://github.com/Axway-API-Management-Plus/apim-cli).{{< /alert >}}
 
 ## Promote registered APIs with zero downtime using a script
 
@@ -104,6 +104,8 @@ The promotion properties are described as follows:
 | `application.oauthresource.upgrade` | Specify whether to promote an existing OAuth resource if there is a conflict in the consumer organization (`true` or `false`). |
 | `api.publish.virtualhost`           | Specify an optional virtual host name and port on which the promoted APIs are available. The host name should be DNS resolvable. |
 | `api.unpublished.remove`            | Specify whether to remove an old unpubished API from the development organization (`true` or `false`). This only applies when an upgrade occurs. For example, if there is a conflict and `api.conflict.upgrade` is set to `true`, this results in two APIs (existing and upgraded). The `api.unpublished.remove` option specifies whether to keep or delete the existing API that has been unpublished. |
+| `application.apis.remove.all`       | Specifies whether, on API conflict, all current API access granted to applications should be removed (`true` or `false`). When enabled, requires that api.conflict.upgrade is set to `true` also.|
+| `organization.apis.remove.all`      | Specifies whether, on API conflict, all current API access granted to organizations should be removed (`true` or `false`). When enabled, requires that api.conflict.upgrade is set to `true` also.|
 
 After running the `apimanager-promote` command, press **F5** to reload the API Manager web console in the target environment.
 

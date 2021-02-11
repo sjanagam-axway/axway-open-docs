@@ -70,7 +70,7 @@ The following sample files are included:
     * Sample Shibboleth configuration files to help you configure Shibboleth as an IdP. These configuration files are part of the Shibboleth installation and can be found in the respective Shibboleth installation folders. For more information on Shibboleth, see the [Shibboleth documentation](https://wiki.shibboleth.net/confluence/display/IDP30/Home).
     * Sample `service-provider.xml` where the IdP is specified by file using `idp.xml`.
     * Sample `idp.xml`.
-    * `keycloak` folder:
+* `keycloak` folder:
     * Sample `service-provider.xml` file that uses a URL to specify the IdP.
     * Sample `service-provider-apiportal.xml` for configuring API Portal SSO. For more details, see
         [Configure API Portal single sign-on](/docs/apim_administration/apiportal_sso/sso_config/).
@@ -108,7 +108,7 @@ The `service-provider.xml` mapping effectively maps a user to an organization. T
 * If the user's role is `User` or `Operator`, the user must belong to a specific organization (at most one organization) and that organization must already exist in API Manager. An API Manager administrator user can add the organizations in advance. For more information on adding organizations, see [Manage organizations](/docs/apim_administration/apimgr_admin/api_mgmt_admin/#manage-organizations).
 * If the user's role is `Administrator`, that user does not need to belong to a specific organization.
 
-For more information on API Manager roles, see [API Manager access control](/docs/apimgr_concepts/api_mgmt_orgs_roles/#api-manager-access-control).
+For more information on API Manager roles, see [API Manager access control](/docs/api_mgmt_overview/key_concepts/api_mgmt_orgs_roles/#api-manager-access-control).
 
 ### SSO users and SSO login
 
@@ -118,10 +118,10 @@ The following restrictions apply to SSO users and SSO login:
 * To log in using SSO, users cannot use the standard login URL (`https://FQDN:PORT`). Instead, users must use the following SSO login URL:
 
   ```
-   https://FQDN:PORT/api/portal/v1.3/sso/login/
+   https://FQDN:PORT/api/portal/v1.4/sso/login/
   ```
 
-* `FQDN` is the FQDN of the machine where API Gateway is running, and `PORT` is the API Manager listening port (for example, `https://gateway.example.com:8075/api/portal/v1.3/sso/login/`).
+* `FQDN` is the FQDN of the machine where API Gateway is running, and `PORT` is the API Manager listening port (for example, `https://gateway.example.com:8075/api/portal/v1.4/sso/login/`).
 * If a user has already authenticated using SSO (for example, by previously logging in to Decision Insight), they must still use the SSO login URL for API Manager. If they are already authenticated, they are automatically redirected to the API Manager home page at `https://FQDN:PORT/home` and presented with a view appropriate to their API Manager role.
 
 ## Step 1 – Configure the IdP
@@ -242,7 +242,7 @@ Perform the following steps in Policy Studio:
 7. Enter the following values to the additional headers table, and click **OK**:
    * `Content-Security-Policy`: `frame-ancestors 'none'`
    * `X-Frame-Options`: `DENY`
-8. Edit each of the servlets (`API Portal v1.2 (‘v1.2’)` and `API Portal v1.3 (‘v1.3’)`) as follows:
+8. Update the servlet to `API Portal v1.4 ('v1.4')`.
    * Edit the property `jersey.config.server.provider.classnames`. In the **Value** field add the class name `com.vordel.common.apiserver.filter.SSOBindingFeature` to the existing comma-separated list of class names.
    * Add a new property. In the **Name** field enter the name `CsrfProtectionFilterFactory.refererWhitelist` and in the **Value** field enter the URL of the IdP (for example, `https://sample_idp_host:8443`).
 9. Deploy the configuration to the API Manager-enabled API Gateway instance.
@@ -253,13 +253,14 @@ You must configure the SAML endpoints of API Manager in your IdP. Consult the do
 
 | Keycloak field name                                 | API Manager endpoint URL                                                    |
 | --------------------------------------------------- | --------------------------------------------------------------------------- |
-| **Assertion Consumer Service POST Binding URL**     | `https://<your_API Manager_host_FQDN>:8075/api/portal/v1.3/sso/login/post`  |
+| **Assertion Consumer Service POST Binding URL**     | `https://<your_API Manager_host_FQDN>:8075/api/portal/v1.4/sso/login/post`  |
 | **Assertion Consumer Service Redirect Binding URL** | Leave this field blank                                                      |
-| **Logout Service POST Binding URL**                 | `https://<your_API Manager_host_FQDN>:8075/api/portal/v1.3/sso/logout/post` |
-| **Logout Service Redirect Binding URL**             | `https://<your_API Manager_host_FQDN>:8075/api/portal/v1.3/sso/logout/post` |
+| **Logout Service POST Binding URL**                 | `https://<your_API Manager_host_FQDN>:8075/api/portal/v1.4/sso/logout/post` |
+| **Logout Service Redirect Binding URL**             | `https://<your_API Manager_host_FQDN>:8075/api/portal/v1.4/sso/logout/post` |
 
-{{< alert title="Note" color="primary" >}}If you are also configuring SSO for API Portal, you must configure the endpoint URLs separately for both API Manager and API Portal. For more details, see
-[Configure API Portal single sign-on](/docs/apim_administration/apiportal_sso/sso_config/).{{< /alert >}}
+* If you are also configuring SSO for API Portal, you must configure the endpoint URLs separately for both API Manager and API Portal. For more details, see
+[Configure API Portal single sign-on](/docs/apim_administration/apiportal_sso/sso_config/).
+* For API Manager endpoint URLs, use the version of the API as specified previously in the servlet properties.
 
 ## Step 5 – Configure the SSO cookie domain name (optional)
 
@@ -280,6 +281,41 @@ To change the default domain name to a sample domain name such as `axway.int`:
 
 {{< alert title="Note" color="primary" >}}Do not prefix the domain name with a period (for example, do not use the value `.axway.int`). {{< /alert >}}
 
-## Step 6 – Restart API Gateway
+## Step 6 – Configure the `orgs2Role` header using a policy (optional)
+
+You can use the [`orgs2Role`](/docs/apim_administration/apimgr_sso/sso_mapping/#orgs2role) attribute to assign user membership to multiple API Manager organizations, or you can configure an API Gateway policy.
+
+The policy is invoked at runtime after the SAML response from the identity provider is verified by the service provider (in this case, API Manager). The API Manager runtime will only accept the output of the policy if it is successful and it has the `orgs2Role` value set in the HTTP headers. To set the header, you can use existing API Gateway filters, for example [Add HTTP Header Filter](/docs/apim_policydev/apigw_polref/conversion_common/#add-http-header-filter), or you can set the header programmatically.
+
+The following message attributes are available to aid with the decision making process of setting the `orgs2Role`header:
+
+* `user.email`
+* `user.telephone.number`
+* `user.department`
+* `user.description`
+* `user.userfullname`
+* `orgs2Role`
+* `authentication.subject.role`
+* `authentication.subject.id`
+* `authentication.organization.name`
+
+To configure a policy, perform the following steps in Policy Studio:
+
+1. Open the configuration of your API Manager-enabled API Gateway instance. For example, select **File > New Project from an API Gateway instance**.
+2. Navigate to **Server Settings > API Manager > Identity Provider** in the Policy Studio tree.
+3. Choose the policy you want to invoke in the **Single sign on policy (optional)** field.
+
+### Example policy
+
+1. Use a switch filter to make a decision based on a message attribute.
+
+    ![Single sign on processing policy](/Images/docbook/images/api_mgmt/sso_processing.png)
+2. Assign membership via the **Add HTTP Header** filter.
+
+    ![Add orgs2Role header](/Images/docbook/images/api_mgmt/sso_addheader.png)
+
+{{< alert title="Note" color="primary" >}}Using this policy will take precedence over any existing value you might have for the `orgs2Role` attribute in the identify provider configuration or the `service-provider.xml` file.{{< /alert >}}
+
+## Step 7 – Restart API Gateway
 
 Finally, you must restart the Node Manager and the API Gateway instance to enable the changes in `service-provider.xml` and `jvm.xml` files to be applied. After the restart, your users will be able to log in to API Manager using SSO.

@@ -83,12 +83,6 @@ Certificates and key pairs can be imported into the API Gateway's trusted certif
 
 For more information on the certificate store, see [Manage certificates and keys](/docs/apim_administration/apigtw_admin/general_certificates/). Certificates and keys can also be stored in a Hardware Security Module (HSM), for example, Thales nShield Solo or Safenet Luna SA.
 
-API Gateway can also trust certificates in a Java keystore by adding the following line to the `/system/conf/jvm.xml` file:
-
-```
-<VMArg name=”-Djavax.net.ssl.trustStore=cacerts/jks"/>
-```
-
 ## Configure certificates for API Gateway internal SSL channels
 
 After installing API Gateway, it is necessary to run the `managedomain` utility to create a topology (for example, groups and instances) in which the API Gateways will run.  As part of this process, when instances are created, a number of certificates are created to use in mutually authenticated SSL channels between internal components (for example, Admin Node Manager and API Gateway instances). The default signing algorithm used when generating these certificates is SHA256.

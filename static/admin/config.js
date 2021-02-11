@@ -17,9 +17,11 @@ const docsDefaults = (contentDirectory, imageDirectory) => ({
     { name: 'title', label: 'Title', widget: 'string' },
     { name: 'linkTitle', widget: 'hidden', required: false },
     { name: 'no_list', widget: 'hidden', required: false },
+    { name: 'simple_list', widget: 'hidden', required: false },
+    { name: 'draft', widget: 'hidden', required: false },
     { name: 'weight', widget: 'hidden', required: false },
     { name: 'date', widget: 'hidden', required: false },
-    { name: 'description', label: 'Summary', widget: 'text' },
+    { name: 'description', label: 'Summary', widget: 'text', required: false },
     { name: 'body', label: 'Body', widget: 'markdown' },
   ],
 })
@@ -51,8 +53,20 @@ const collections = [{
   format: 'frontmatter',
   create: false,
 }, {
-  ...docsDefaults('apimgr_concepts', 'docbook/images/api_mgmt'),
-  name: 'apimgr_concepts',
+  ...docsDefaults('api_mgmt_overview', 'api_mgmt_overview'),
+  name: 'api_mgmt_overview',
+  label: 'API management overview',
+  label_singular: 'page in APIM overview section',
+  description: 'All pages relating to API management overview',
+}, {
+  ...docsDefaults('api_mgmt_overview/api_mgmt_components', 'api_mgmt_overview'),
+  name: 'api_mgmt_components',
+  label: 'API management components',
+  label_singular: 'page in APIM components section',
+  description: 'All pages relating to API management components',
+}, {
+  ...docsDefaults('api_mgmt_overview/key_concepts', 'api_mgmt_overview'),
+  name: 'key_concepts',
   label: 'API management concepts',
   label_singular: 'page in APIM concepts section',
   description: 'All pages relating to API management concepts',
@@ -87,6 +101,18 @@ const collections = [{
   label: 'Upgrade API Gateway',
   label_singular: 'page in APIG upgrade section',
   description: 'All pages relating to upgrading API Gateway.',
+}, {
+  ...docsDefaults('apim-reference-architectures/container-aws', 'apim-reference-architectures/container-aws'),
+  name: 'container-aws',
+  label: 'API management AWS reference architecture',
+  label_singular: 'page in APIM AWS ref arch section',
+  description: 'All pages relating to AWS reference architecture',
+}, {
+  ...docsDefaults('apim-reference-architectures/container-azure', 'apim-reference-architectures/container-azure'),
+  name: 'container-azure',
+  label: 'API management Azure reference architecture',
+  label_singular: 'page in APIM Azure ref arch section',
+  description: 'All pages relating to Azure reference architecture',
 }, {
   ...docsDefaults('apimgmt_multi_dc', 'APIGateway'),
   name: 'apimgmt_multi_dc',
@@ -227,11 +253,29 @@ const collections = [{
   description: 'All pages relating to configuring and using API Gateway Analytics.',
   format: 'frontmatter',
 }, {
+  ...docsDefaults('apim_howto_guides', 'APIGateway'),
+  name: 'apim_howto_guides',
+  label: 'How-to guides',
+  label_singular: 'page in APIM how-to guides section',
+  description: 'All pages relating to APIM how-to guides.',
+}, {
   ...docsDefaults('apigtw_devguide', 'APIGatewayDeveloperGuide'),
   name: 'apigtw_devguide',
   label: 'Extend API Gateway',
   label_singular: 'page in APIG extend section',
   description: 'All pages relating to extending API Gateway.',
+}, {
+  ...docsDefaults('apim_yamles', 'apim_yamles'),
+  name: 'apim_yamles',
+  label: 'YAML configuration',
+  label_singular: 'page in YAML configuration section',
+  description: 'All pages relating to YAML configuration.',
+}, {
+  ...docsDefaults('apim_yamles/apim_yamles_references', 'apim_yamles'),
+  name: 'apim_yamles_references',
+  label: 'YAML Configuration Reference',
+  label_singular: 'page in YAML configuration ref section',
+  description: 'All reference pages for YAML configuration.',
 }, {
   ...docsDefaults('apim_reference', 'APIGatewayDeveloperGuide'),
   name: 'apim_reference',
@@ -246,24 +290,80 @@ const collections = [{
   description: 'Glossary for API Management and AMPLIFY Central.',
   folder: 'content/en/docs/glossary',
 }, {
-  ...docsDefaults('apim_relnotes/20200130_apimgr_relnotes', 'docbook/images/release_notes'),
-  name: '20200130_apimgr_relnotes',
-  label: 'API Gateway and API Manager 7.7 Jan20 release notes',
-  label_singular: 'page in APIG/APIM 7.7 Jan20 release note section',
-  description: 'Release notes for API Gateway and API Manager 7.7 Jan20 release.',
-}, {
-  ...docsDefaults('apim_relnotes/20200130_apip_relnotes', 'docbook/images/release_notes'),
-  name: '20200130_apip_relnotes',
-  label: 'API Portal 7.7 Jan20 release notes',
-  label_singular: 'page in API Portal 7.7 Jan20 release note section',
-  description: 'Release notes for API Portal 7.7 Jan20 release.',
+  ...docsDefaults('apim_relnotes', 'docbook/images/release_notes'),
+  name: 'apim_relnotes',
+  label: 'Release notes',
+  label_singular: 'page in APIM release note section',
+  description: 'Release notes for APIM 7.7 release.',
   format: 'frontmatter',
+}, {
+  ...docsDefaults('apim_relnotes/201904_release', 'docbook/images/release_notes'),
+  name: '201904_release',
+  label: 'API Management 7.7 April 2019 release notes',
+  label_singular: 'page in 7.7 April 2019 release note section',
+  description: 'Release notes for 7.7 April 2019 release.',
 }, {
   ...docsDefaults('central', 'central'),
   name: 'central',
   label: 'AMPLIFY Central documentation',
   label_singular: 'page in AMPLIFY Central section',
-  description: 'All pages relating to AMPLIFY Central and AMPLIFY Unified Catalog.',
+  description: 'All pages relating to AMPLIFY Central.',
+  format: 'frontmatter',
+}, {
+  ...docsDefaults('central/mesh_management', 'central/mesh_management'),
+  name: 'mesh_management',
+  label: 'Mesh management documentation',
+  label_singular: 'page in Mesh management',
+  description: 'All pages relating to Mesh management.',
+  format: 'frontmatter',
+}, {
+  ...docsDefaults('central/amplify_relnotes', 'central/amplify_relnotes'),
+  name: 'amplify_relnotes',
+  label: 'AMPLIFY Release notes',
+  label_singular: 'page in AMPLIFY Release notes section',
+  description: 'Release notes for AMPLIFY Central',
+  format: 'frontmatter',
+}, {
+  ...docsDefaults('central/connect-api-manager', 'central/connect-api-manager'),
+  name: 'connect-api-manager',
+  label: 'Connect API Manager documentation',
+  label_singular: 'page in Connect API Manager',
+  description: 'All pages relating to Connect API Manager.',
+  format: 'frontmatter',
+}, {
+  ...docsDefaults('central/connect-aws-gateway', 'central/connect-aws-gateway'),
+  name: 'connect-aws-gateway',
+  label: 'Connect AWS Gateway documentation',
+  label_singular: 'page in Connect AWS Gateway',
+  description: 'All pages relating to Connect AWS Gateway.',
+  format: 'frontmatter',
+}, {
+  ...docsDefaults('central/connect-azure-gateway', 'central/connect-azure-gateway'),
+  name: 'connect-azure-gateway',
+  label: 'Connect Azure Gateway documentation',
+  label_singular: 'page in Connect Azure Gateway',
+  description: 'All pages relating to Connect Azure Gateway.',
+  format: 'frontmatter',
+}, {
+  ...docsDefaults('central/cli_central', 'central/cli_central'),
+  name: 'cli_central',
+  label: 'Get started with AMPLIFY Central CLI',
+  label_singular: 'page in AMPLIFY Central CLI',
+  description: 'All pages relating to AMPLIFY Central CLI.',
+  format: 'frontmatter',
+}, {
+  ...docsDefaults('catalog', 'catalog'),
+  name: 'catalog',
+  label: 'AMPLIFY Unified Catalog documentation',
+  label_singular: 'page in AMPLIFY Unified Catalog',
+  description: 'All pages relating to AMPLIFY Unified Catalog.',
+  format: 'frontmatter',
+}, {
+  ...docsDefaults('catalog/catalog_relnotes', 'catalog'),
+  name: 'catalog_relnotes',
+  label: 'AMPLIFY Unified Catalog Release notes',
+  label_singular: 'page in AMPLIFY Unified Catalog Release notes section',
+  description: 'Release notes for AMPLIFY Unified Catalog',
   format: 'frontmatter',
 }, {
   ...docsDefaults('contribution_guidelines', 'contributing'),
@@ -295,9 +395,12 @@ const collections = [{
   folder: 'content/en/blog/friends',
 }];
 
+const cms_branch = window.location.hostname.includes('developmar21') ? 'developmar21' : 'master';
+
 const config = {
   backend: {
     name: 'github',
+    branch: cms_branch,
     repo: 'Axway/axway-open-docs', //Path to your GitHub repository. For fork testing use alexearnshaw/axway-open-docs.
     open_authoring: true,
   },

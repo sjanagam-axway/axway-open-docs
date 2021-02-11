@@ -1,9 +1,9 @@
 {
 "title": "Configure diagnostic trace",
-"linkTitle": "Configure diagnostic trace",
-"weight":"117",
-"date": "2019-10-14",
-"description": "Configure and view diagnostic trace and debugging information about API Gateway runtime execution."
+  "linkTitle": "Configure diagnostic trace",
+  "weight": "117",
+  "date": "2019-10-14",
+  "description": "Configure and view diagnostic trace and debugging information about API Gateway runtime execution."
 }
 
 By default, API Gateway produces diagnostic trace and debugging information to record details about its runtime execution. For example, this includes services starting or stopping, exceptions, and messages sent through the gateway. This information can then be used by administrators and developers for diagnostics and debugging purposes, and is useful when contacting [Axway Support](https://support.axway.com/).
@@ -326,15 +326,16 @@ All `snd` and `rcv` trace statements start and end with < and > respectively. If
 
 ## Integrate trace output with Apache log4J
 
-Apache log4j is included on API Gateway classpath. This is because some third-party products that API Gateway interoperates with require log4j. The configuration for log4j is found in the gateway `INSTALL_DIR/system/conf` directory in the `log4j2.xml` file.
+Apache log4j is included on API Gateway classpath. This is because some third-party products that API Gateway interoperates with require log4j. The configuration for log4j is found in the gateway `INSTALL_DIR/system/conf` directory in the `log4j2.yaml` file.
 
-For example, to specify that the log4j appender sends output to the gateway trace file, add the following setting to your `log4j2.xml` file:
+For example, to specify that the log4j appender sends output to the gateway trace file, add the following setting to your `log4j2.yaml` file:
 
 ```
-<Root level="debug">
-<AppenderRef ref="STDOUT" />
-<AppenderRef ref="VordelTrace" />
-</Root>
+Root:
+  AppenderRef:
+    - ref: STDOUT
+    - ref: VordelTrace
+  level: debug
 ```
 
 ## Environment variables

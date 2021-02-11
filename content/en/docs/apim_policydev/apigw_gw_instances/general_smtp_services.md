@@ -1,11 +1,10 @@
 {
 "title": "Configure SMTP services",
-"linkTitle": "Configure SMTP services",
-"weight": 4,
-"date": "2019-10-17",
-"description": "Configure API Gateway to receive email and to act as a mail relay."
+  "linkTitle": "Configure SMTP services",
+  "weight": 4,
+  "date": "2019-10-17",
+  "description": "Configure API Gateway to receive email and to act as a mail relay."
 }
-
 The API Gateway provides support for Simple Mail Transfer Protocol (SMTP), which enables the API Gateway to receive email and to act as a mail relay. The API Gateway can accept incoming email messages using the SMTP protocol, and then forward them on to a configured mail server. You can also use Policy Studio to configure optional policies for specific SMTP commands (for example, `HELO/EHLO`, `AUTH`, `MAIL FROM`, and so on).
 
 When an SMTP command is configured in Policy Studio, each time the SMTP command is accepted by the API Gateway, the appropriate policy is executed. When the policy completes successfully, the SMTP conversation resumes. This topic shows how to configure SMTP services, interfaces, and handler policies using Policy Studio.
@@ -14,34 +13,25 @@ When an SMTP command is configured in Policy Studio, each time the SMTP command 
 
 To add an SMTP service to enable the API Gateway to accept SMTP connections, perform the following steps in Policy Studio:
 
-1. Under the **Environment Configuration** > **Listeners**
-    node in the tree, select an API Gateway instance node (for example, the default **API Gateway**).
+1. Under the **Environment Configuration** > **Listeners** node in the tree, select an API Gateway instance node (for example, the default **API Gateway**).
 2. Right-click, and select **Add SMTP Services**.
-3. In the **SMTP Services**
-    dialog, specify a unique name for the SMTP service in the **Name**
-    field.
-4. In the **Outgoing Server Settings**
-    section, complete the following settings:
-    * **Host**: Host name or IP address of the remote mail server. This is the server to which the API Gateway forwards incoming SMTP commands (for example, `smtp.gmail.com`). You can also specify a mail server running locally on the same machine as the API Gateway using an address of `localhost`
-        or `127.0.0.1`.
-    * **Port**: Port on which to connect to the remote mail server. Defaults to port `25`.
+3. In the **SMTP Services** dialog, specify a unique name for the SMTP service in the **Name** field.
+4. In the **Outgoing Server Settings** section, complete the following settings:
 
+   * **Host**: Host name or IP address of the remote mail server. This is the server to which the API Gateway forwards incoming SMTP commands (for example, `smtp.gmail.com`). You can also specify a mail server running locally on the same machine as the API Gateway using an address of `localhost`   or `127.0.0.1`.
+   * **Port**: Port on which to connect to the remote mail server. Defaults to port `25`.
 5. In the **Security** section, complete the following settings:
-    * **Connection Security**: Select the type of security used for the connection to the remote mail server. Defaults to `None`. Other possible values are `SSL`
-        and `STARTTLS`.
-    * **Trusted Certificates**: Use this tab to select the trusted CA certificates used in the security handshake for the connection to the remote mail server. This field is mandatory if SSL or STARTTLS connection security is selected.
-    * **Client SSL Authentication**: Use this tab to specify the trusted client certificates used in the security handshake for the connection to the remote mail server. This field is optional if SSL or STARTTLS connection security is selected.
-    * **Advanced**: Use this tab to specify a list of ciphers to use during the security handshake for the connection to the remote mail server. Defaults to `DEFAULT`. For more details, see the OpenSSL ciphers man page. This field is optional if SSL or STARTTLS connection security is selected.
 
+   * **Connection Security**: Select the type of security used for the connection to the remote mail server. Defaults to `None`. Other possible values are `SSL`   and `STARTTLS`.
+   * **Trusted Certificates**: Use this tab to select the trusted CA certificates used in the security handshake for the connection to the remote mail server. This field is mandatory if SSL or STARTTLS connection security is selected.
+   * **Client SSL Authentication**: Use this tab to specify the trusted client certificates used in the security handshake for the connection to the remote mail server. This field is optional if SSL or STARTTLS connection security is selected.
+   * **Advanced**: Use this tab to specify a list of ciphers to use during the security handshake for the connection to the remote mail server. Defaults to `DEFAULT`. For more details, see the OpenSSL ciphers man page. This field is optional if SSL or STARTTLS connection security is selected.
 6. In the **Authentication** section, complete the following settings:
-    * **Username**: Specify the user name used to authenticate the API Gateway with a remote SMTP server using the `AUTH`
-        SMTP command.
-    * **Password**: Specify the password used to authenticate the API Gateway with a remote SMTP server using the `AUTH`
-        SMTP command.
 
+   * **Username**: Specify the user name used to authenticate the API Gateway with a remote SMTP server using the `AUTH`   SMTP command.
+   * **Password**: Specify the password used to authenticate the API Gateway with a remote SMTP server using the `AUTH`   SMTP command.
 7. Select the **Include in real time monitoring** check box to monitor the SMTP services using the web-based API Gateway Manager monitoring console.
-8. Click **OK**. This creates a tree node for the SMTP service under the selected instance in the **Services**
-tree.
+8. Click **OK**. This creates a tree node for the SMTP service under the selected instance in the **Services** tree.
 
 ## Add an SMTP interface
 
@@ -55,8 +45,7 @@ Because the SSL and STARTTLS interface types have the potential to be secure (ST
 
 To configure an inbound interface, perform the following steps in Policy Studio:
 
-1. Under the **Environment Configuration** > **Listeners**
-    node in the tree, select the SMTP node under the instance.
+1. Under the **Environment Configuration** > **Listeners** node in the tree, select the SMTP node under the instance.
 2. Right-click, and select **Add Interface** > interface type (**TCP**, **SSL**, or **STARTTLS**).
 3. Complete the settings on the relevant dialog. For full details on these settings, see [Configure HTTP services](/docs/apim_policydev/apigw_gw_instances/general_services/).
 4. Click **OK**.
@@ -75,204 +64,138 @@ The next sections explain how to configure policy handlers for each command.
 
 ### Add an HELO/EHLO policy handler
 
-The **HELO/EHLO**
-policy handler is invoked when a `HELO/EHLO`
-SMTP command is received from a client. This handler enables you to modify the `HELO/EHLO`
-greeting and the client domain. You can configure the greeting message sent back to the client from the API Gateway during the `HELO/EHLO`
-handshake as required. You can also configure a policy to replace the value of `smtp.helo.greeting`. The domain specified by the connected client in the `HELO/EHLO`
-command can be modified before forwarding on to the remote mail server. You can also configure a policy to replace the value of `smtp.helo.domain`.
+The **HELO/EHLO** policy handler is invoked when a `HELO/EHLO` SMTP command is received from a client. This handler enables you to modify the `HELO/EHLO` greeting and the client domain. You can configure the greeting message sent back to the client from the API Gateway during the `HELO/EHLO` handshake as required. You can also configure a policy to replace the value of `smtp.helo.greeting`. The domain specified by the connected client in the `HELO/EHLO` command can be modified before forwarding on to the remote mail server. You can also configure a policy to replace the value of `smtp.helo.domain`.
 
-To configure a policy handler for the `HELO/EHLO`
-command, perform the following steps:
+To configure a policy handler for the `HELO/EHLO` command, perform the following steps:
 
-1. Under the **Environment Configuration** > **Listeners**
-    node in the tree, select the SMTP node under the instance.
+1. Under the **Environment Configuration** > **Listeners** node in the tree, select the SMTP node under the instance.
 2. Right-click, and select **Add Policy Handler** > **HELO/EHLO**.
-3. In the **Configure HELO Host**
-    dialog, specify the **Greeting**
-    to be sent back to the client as part of the `HELO/EHLO`
-    handshake. Defaults to `Hello ${smtp.helo.domain}`.
-4. In the **Policy**
-    tree, select the policy that you wish to handle the `HELO/EHLO`
-    command.
+3. In the **Configure HELO Host** dialog, specify the **Greeting** to be sent back to the client as part of the `HELO/EHLO` handshake. Defaults to `Hello ${smtp.helo.domain}`.
+4. In the **Policy** tree, select the policy that you wish to handle the `HELO/EHLO` command.
 5. Click **OK**.
 
-**Message attributes**:
-The following message attributes are generated during processing:
+**Message attributes**: The following message attributes are generated during processing:
 
-| Message Attribute       | Description                                                                |
-|-------------------------|----------------------------------------------------------------------------|
-| `smtp.helo.domain`      | The client domain specified in the `HELO/EHLO` SMTP command received from the client.  |
-| `smtp.helo.greeting`    | The HELO greeting to be sent back to the client after `HELO/EHLO` processing is performed. The default value is `Hello ${smtp.helo.domain}`.  |
-| `message.source`        | The inbound port on which SMTP traffic is received by the API Gateway.  |
-| `message.protocol.type` | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`.  |
-| `monitoring.enabled`    | Set to `true` if monitoring is enabled for the protocol, otherwise `false`.    |
+| Message Attribute       | Description                                                                                                                                  |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `smtp.helo.domain`      | The client domain specified in the `HELO/EHLO` SMTP command received from the client.                                                        |
+| `smtp.helo.greeting`    | The HELO greeting to be sent back to the client after `HELO/EHLO` processing is performed. The default value is `Hello ${smtp.helo.domain}`. |
+| `message.source`        | The inbound port on which SMTP traffic is received by the API Gateway.                                                                       |
+| `message.protocol.type` | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`.                                                                  |
+| `monitoring.enabled`    | Set to `true` if monitoring is enabled for the protocol, otherwise `false`.                                                                  |
 
 ### Add an AUTH policy handler
 
-The **AUTH**
-policy handler is invoked when an `AUTH`
-SMTP command is received from a client. You can use the **AUTH**
-handler to run a policy to perform user authentication checks. For example, during the Authentication phase of the SMTP conversation, the client-supplied username and password can be verified against an Authentication Repository using a policy containing an **Attribute Authentication**
-filter.
+The **AUTH** policy handler is invoked when an `AUTH` SMTP command is received from a client. You can use the **AUTH** handler to run a policy to perform user authentication checks. For example, during the Authentication phase of the SMTP conversation, the client-supplied username and password can be verified against an Authentication Repository using a policy containing an **Attribute Authentication** filter.
 
 To configure a policy handler for the `AUTH` command, perform the following steps:
 
-1. Under the **Environment Configuration** > **Listeners**
-    node in the tree, select the **SMTP**
-    node under the instance.
+1. Under the **Environment Configuration** > **Listeners** node in the tree, select the **SMTP** node under the instance.
 2. Right-click, and select **Add Policy Handler** > **AUTH**.
-3. In the **Configure AUTH**
-    dialog, in the **Policy**
-    tree, select the policy that you wish to handle the `AUTH`
-    command.
+3. In the **Configure AUTH** dialog, in the **Policy** tree, select the policy that you wish to handle the `AUTH` command.
 4. Click **OK**.
 
-**Message attributes**:
-The following message attributes are generated during processing:
+**Message attributes**: The following message attributes are generated during processing:
 
-| Message Attribute                 | Description                                                            |
-|-----------------------------------|------------------------------------------------------------------------|
-| `authentication.subject.id`       | The user name supplied by the client.                                  |
-| `authentication.subject.password` | The password supplied by the client.                                   |
-| `message.source`                  | The inbound port on which SMTP traffic is received by the API Gateway. |
-| `message.protocol.type`           | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`.|
-| `monitoring.enabled`              | Set to `true` if monitoring is enabled for the protocol, otherwise `false`.|
+| Message Attribute                 | Description                                                                 |
+| --------------------------------- | --------------------------------------------------------------------------- |
+| `authentication.subject.id`       | The user name supplied by the client.                                       |
+| `authentication.subject.password` | The password supplied by the client.                                        |
+| `message.source`                  | The inbound port on which SMTP traffic is received by the API Gateway.      |
+| `message.protocol.type`           | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`. |
+| `monitoring.enabled`              | Set to `true` if monitoring is enabled for the protocol, otherwise `false`. |
 
 ### Add a MAIL policy handler
 
-The **MAIL**
-policy handler is invoked when a `MAIL FROM`
-SMTP command is received from a client. Emails can be rejected based on wildcard matching of the supplied sender address in the `MAIL FROM`
-SMTP command. For example, email addresses containing `GMAIL.COM`
-(`fromAddress`
-of `*@gmail.com`) as the domain could be accepted using a simple **True**
-filter. Whereas, email addresses containing `YAHOO.COM`
-(`fromAddress`
-of `*@yahoo.com`) could be rejected using a simple **False**
-filter.
+The **MAIL** policy handler is invoked when a `MAIL FROM` SMTP command is received from a client. Emails can be rejected based on wildcard matching of the supplied sender address in the `MAIL FROM` SMTP command. For example, email addresses containing `GMAIL.COM` (`fromAddress` of `*@gmail.com`) as the domain could be accepted using a simple **True** filter. Whereas, email addresses containing `YAHOO.COM` (`fromAddress` of `*@yahoo.com`) could be rejected using a simple **False** filter.
 
-To configure a policy handler for the `MAIL FROM`
-command, perform the following steps:
+To configure a policy handler for the `MAIL FROM` command, perform the following steps:
 
-1. Under the **Environment Configuration** > **Listeners**
-    node in the tree, select the SMTP node under the instance.
+1. Under the **Environment Configuration** > **Listeners** node in the tree, select the SMTP node under the instance.
 2. Right-click, and select **Add Policy Handler** > **MAIL**.
 3. In the **Configure MAIL Address** dialog, you must specify the **From Address**. This is an email address used to filter addresses specified in the `MAIL FROM` SMTP command. You can specify this as a wildcard. The following are some example values:
-    * `*`: Runs the policy for any email address received.
-    * `*@gmail.com`: Runs the policy for all email addresses with the `gmail.com` domain.
-    * `S*@axway.*`: Runs the policy for all email addresses with any `axway` domain, and beginning with the letter `s`.
+
+   * `*`: Runs the policy for any email address received.
+   * `*@gmail.com`: Runs the policy for all email addresses with the `gmail.com` domain.
+   * `S*@axway.*`: Runs the policy for all email addresses with any `axway` domain, and beginning with the letter `s`.
 4. The policy selection is performed on a best-match basis.
-5. In the **Policy**
-    tree, select the policy that you wish to handle the `MAIL FROM`
-    command.
+5. In the **Policy** tree, select the policy that you wish to handle the `MAIL FROM` command.
 6. Click **OK**.
 
-You can configure multiple **MAIL**
-handlers so that different policies are executed, depending on the received mail address.
+You can configure multiple **MAIL** handlers so that different policies are executed, depending on the received mail address.
 
-**Message attributes**
-The following message attributes are generated during processing:
+**Message attributes** The following message attributes are generated during processing:
 
-| Message Attribute       | Description                                                            |
-|-------------------------|------------------------------------------------------------------------|
+| Message Attribute       | Description                                                                           |
+| ----------------------- | ------------------------------------------------------------------------------------- |
 | `smtp.helo.domain`      | The client domain specified in the `HELO/EHLO` SMTP command received from the client. |
 | `smtp.mail.from`        | The email address specified in the `MAIL FROM` SMTP command received from the client. |
-| `message.source`        | The inbound port on which SMTP traffic is received by the API Gateway. |
-| `message.protocol.type` | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`.|
-| `monitoring.enabled`    | Set to `true` if monitoring is enabled for the protocol, otherwise `false`.    |
+| `message.source`        | The inbound port on which SMTP traffic is received by the API Gateway.                |
+| `message.protocol.type` | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`.           |
+| `monitoring.enabled`    | Set to `true` if monitoring is enabled for the protocol, otherwise `false`.           |
 
 ### Add a RCPT policy handler
 
-The **RCPT**
-policy handler is invoked when a `RCPT TO`
-SMTP command is received from a client. You can use this handler to filter addresses specified in the `RCPT TO`
-SMTP command. Recipients can be rejected based on wildcard matching of the supplied recipient address in the `RCPT`
-SMTP command.
+The **RCPT** policy handler is invoked when a `RCPT TO` SMTP command is received from a client. You can use this handler to filter addresses specified in the `RCPT TO` SMTP command. Recipients can be rejected based on wildcard matching of the supplied recipient address in the `RCPT` SMTP command.
 
-For example, recipient addresses containing `GMAIL.COM`
-(`toAddress`
-of `*@gmail.com`) as the domain could be accepted using a simple **True**
-filter. Whereas, addresses containing `YAHOO.COM`
-(`toAddress`
-of `*@yahoo.com`) could be rejected using a simple **False**
-filter. You can configure multiple **RCPT**
-handlers so that different policies are executed, depending on the received email address.
+For example, recipient addresses containing `GMAIL.COM` (`toAddress` of `*@gmail.com`) as the domain could be accepted using a simple **True** filter. Whereas, addresses containing `YAHOO.COM` (`toAddress` of `*@yahoo.com`) could be rejected using a simple **False** filter. You can configure multiple **RCPT** handlers so that different policies are executed, depending on the received email address.
 
-To configure a policy handler for the `RCPT TO`
-command, perform the following steps:
+To configure a policy handler for the `RCPT TO` command, perform the following steps:
 
-1. Under the **Environment Configuration** > **Listeners**
-    node in the tree, select the SMTP node under the instance.
+1. Under the **Environment Configuration** > **Listeners** node in the tree, select the SMTP node under the instance.
 2. Right-click, and select **Add Policy Handler** > **RCPT**.
 3. In the **Configure Recipient Address** dialog, you must specify the **To Address**. This is an email address used to filter addresses specified in the `RCPT TO` SMTP command. You can specify this as a wildcard. The following are some example values:
-    * `*`: Runs the policy for any email address received.
-    * `*@axway.com`: Runs the policy for all email addresses with the `axway.com` domain.
-    * `d*@yahoo.*`: Runs the policy for all email addresses with any `yahoo` domain, and beginning with the letter `d`.
+
+   * `*`: Runs the policy for any email address received.
+   * `*@axway.com`: Runs the policy for all email addresses with the `axway.com` domain.
+   * `d*@yahoo.*`: Runs the policy for all email addresses with any `yahoo` domain, and beginning with the letter `d`.
 4. The policy selection is performed on a best-match basis.
-5. In the **Policy**
-    tree, select the policy that you wish to handle the `MAIL FROM`
-    command.
+5. In the **Policy** tree, select the policy that you wish to handle the `MAIL FROM` command.
 6. Click **OK**.
 
-**Message attributes**:
-The following message attributes are generated during processing:
+**Message attributes**: The following message attributes are generated during processing:
 
-| Message Attribute       | Description                |
-|-------------------------|-----------------------------------------|
-| `smtp.helo.domain`      | The client domain specified in the `HELO/EHLO` SMTP command received from the client.   |
-| `smtp.mail.from`        | The email address specified in the `MAIL FROM` SMTP command received from the client.   |
-| `smtp.rcpt.to`          | The email address specified in the `RCPT TO` SMTP command received from the client. This is the current recipient being processed, whereas `smtp.rcpt.recipients` is the list of recipients processed so far.|
+| Message Attribute       | Description                                                                                                                                                                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `smtp.helo.domain`      | The client domain specified in the `HELO/EHLO` SMTP command received from the client.                                                                                                                                                |
+| `smtp.mail.from`        | The email address specified in the `MAIL FROM` SMTP command received from the client.                                                                                                                                                |
+| `smtp.rcpt.to`          | The email address specified in the `RCPT TO` SMTP command received from the client. This is the current recipient being processed, whereas `smtp.rcpt.recipients` is the list of recipients processed so far.                        |
 | `smtp.rcpt.recipients`  | The list (collection of strings) of recipients (email addresses) received or processed *so far* by the SMTP transaction. This is read-only and updated by the API Gateway each time it receives a `RCPT TO` command from the client. |
-| `message.source`        | The inbound port on which SMTP traffic is received by the API Gateway. |
-| `message.protocol.type` | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`.  |
-| `monitoring.enabled`    | Set to `true` if monitoring is enabled for the protocol, otherwise `false`.  |
+| `message.source`        | The inbound port on which SMTP traffic is received by the API Gateway.                                                                                                                                                               |
+| `message.protocol.type` | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`.                                                                                                                                                          |
+| `monitoring.enabled`    | Set to `true` if monitoring is enabled for the protocol, otherwise `false`.                                                                                                                                                          |
 
 ### Add a DATA policy handler
 
-The **DATA**
-policy handler is invoked when a `DATA`
-SMTP command is received from a client. For example, for emails that contain SOAP/XML content, you can add an XML signature to the XML data, stored in the `content.body`
-message attribute, using an **XML Signature Generation**
-filter. For emails containing attachments, the attached mail data can be run through one of the API Gateway anti-virus filters.
+The **DATA** policy handler is invoked when a `DATA` SMTP command is received from a client. For example, for emails that contain SOAP/XML content, you can add an XML signature to the XML data, stored in the `content.body` message attribute, using an **XML Signature Generation** filter. For emails containing attachments, the attached mail data can be run through one of the API Gateway anti-virus filters.
 
-Alternatively, you can use **SMIME Encrypt**
-or **SMIME Decrypt**
-filters to encrypt or decrypt emails (including attachments) passing through the API Gateway. You can also digitally sign emails using an **SMIME Sign**
-filter, or verify signatures on already digitally signed emails using an **SMIME Verify**
-filter.
+Alternatively, you can use **SMIME Encrypt** or **SMIME Decrypt** filters to encrypt or decrypt emails (including attachments) passing through the API Gateway. You can also digitally sign emails using an **SMIME Sign** filter, or verify signatures on already digitally signed emails using an **SMIME Verify** filter.
 
-To configure a policy handler for the `DATA`
-command, perform the following steps:
+To configure a policy handler for the `DATA` command, perform the following steps:
 
-1. Under the **Environment Configuration** > **Listeners**
-    node in the tree, select the **SMTP**
-    node under the instance.
+1. Under the **Environment Configuration** > **Listeners** node in the tree, select the **SMTP** node under the instance.
 2. Right-click, and select **Add Policy Handler** > **DATA**.
-3. In the **Policy**
-    tree, select the policy that you wish to handle the `DATA`
-    command.
+3. In the **Policy** tree, select the policy that you wish to handle the `DATA` command.
 4. Click **OK**.
 
-**Message attributes**:
-The following message attributes are added during processing:
+**Message attributes**: The following message attributes are added during processing:
 
-| Message Attribute       | Description   |
-|-------------------------|-------------------------------------------|
-| `smtp.helo.domain`      | The client domain specified in the `HELO/EHLO` SMTP command received from the client.|
-| `smtp.mail.from`        | The email address specified in the `MAIL FROM` SMTP command received from the client.|
-| `smtp.rcpt.recipients`  | The full list (collection of strings) of recipients (email addresses) processed by the SMTP transaction.         |
-| `content.body`          | The stream representing the body of the mail. The `content.body` does not include MIME headers.  |
-| `message.source`        | The inbound port on which SMTP traffic is received by the API Gateway. |
-| `message.protocol.type` | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`.   |
-| `monitoring.enabled`    | Set to `true` if monitoring is enabled for the protocol, otherwise `false`. |
+| Message Attribute       | Description                                                                                              |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| `smtp.helo.domain`      | The client domain specified in the `HELO/EHLO` SMTP command received from the client.                    |
+| `smtp.mail.from`        | The email address specified in the `MAIL FROM` SMTP command received from the client.                    |
+| `smtp.rcpt.recipients`  | The full list (collection of strings) of recipients (email addresses) processed by the SMTP transaction. |
+| `content.body`          | The stream representing the body of the mail. The `content.body` does not include MIME headers.          |
+| `message.source`        | The inbound port on which SMTP traffic is received by the API Gateway.                                   |
+| `message.protocol.type` | The protocol used for the connection. This can be `smtp-tcp` or `smtp-ssl`.                              |
+| `monitoring.enabled`    | Set to `true` if monitoring is enabled for the protocol, otherwise `false`.                              |
 
 ## SMTP authentication
 
 The SMTP protocol supports Extended SMTP (ESMTP) PLAIN authentication. The following matrix shows the possible authentication scenarios and actions based on the SMTP Services configuration:
 
 | Scenario | AUTH handler | AUTH user name and password | Mail server advertises AUTH | API Gateway advertises AUTH | Proxy client AUTH | Authenticate API Gateway to server |
-|----------|--------------|-----------------------------|-----------------------------|-----------------------------|-------------------|------------------------------------|
+| -------- | ------------ | --------------------------- | --------------------------- | --------------------------- | ----------------- | ---------------------------------- |
 | 1        | No           | No                          | No                          | No                          | No                | No                                 |
 | 2        | No           | No                          | Yes                         | Yes                         | Yes               | No                                 |
 | 3        | No           | Yes                         | No                          | No                          | No                | No                                 |
@@ -295,11 +218,9 @@ These authentication scenarios are described as follows:
 
 ## SMTP Content-Transfer-Encoding
 
-The SMTP protocol supports automatic Content-Transfer-Encoding/Decoding. For `DATA`
-SMTP commands, the content of the incoming mail body may be encoded. To enable policy filters to view and/or manipulate the raw body data, the contents are automatically decoded before policy execution, and re-encoded afterwards (before being forwarded on to the configured outbound mail server).
+The SMTP protocol supports automatic Content-Transfer-Encoding/Decoding. For `DATA` SMTP commands, the content of the incoming mail body may be encoded. To enable policy filters to view and/or manipulate the raw body data, the contents are automatically decoded before policy execution, and re-encoded afterwards (before being forwarded on to the configured outbound mail server).
 
-**Supported encodings**:
-The following encodings are supported:
+**Supported encodings**: The following encodings are supported:
 
 * Base64
 * 7-bit
@@ -319,38 +240,24 @@ This section provides a step-by-step example of how to configure and deploy SMTP
 
  The API Gateway connects to the Gmail STARTTLS interface, which is available at `smtp.gmail.com`, and listening on port `587`.To configure the SMTP Services, perform the following steps in Policy Studio:
 
-1. Under the **Environment Configuration** > **Listeners**
-    node in the tree, select a Process node (for example, the default **API Gateway**).
+1. Under the **Environment Configuration** > **Listeners** node in the tree, select a Process node (for example, the default **API Gateway**).
 2. Right-click, and select **Add SMTP Services**.
-3. Enter `smtp.gmail.com`
-    for the **Host**.
-4. Enter `587`
-    for the **Port**.
-5. Select `STARTTLS`
-    from the **Connection Security**
-    drop-down list. This is selected because `smtp.gmail.com:587`
-    exposes the Gmail STARTTLS SMTP interface.
+3. Enter `smtp.gmail.com` for the **Host**.
+4. Enter `587` for the **Port**.
+5. Select `STARTTLS` from the **Connection Security** drop-down list. This is selected because `smtp.gmail.com:587` exposes the Gmail STARTTLS SMTP interface.
 6. Because STARTTLS has the potential to be upgraded to a secure connection, you must also select some **Trusted Certificates**.
-7. Accept all other defaults, and click **OK**
-    to add the SMTP services.
+7. Accept all other defaults, and click **OK** to add the SMTP services.
 
 ### Configure the SMTP client interface
 
  To configure a STARTTLS client interface, perform the following steps in Policy Studio:
 
-1. Right-click the **SMTP**
-    Services node, and select **Add Interface** > **STARTTLS**.
-2. Enter a **Port**
-    (for example, `8026`). This is the port on which the API Gateway’s incoming SMTP traffic is accepted. You can enter any port that is not already in use.
-3. Because STARTTLS has the potential to be upgraded to a secure connection, you must configure a trusted certificate. Click the **X.509 Certificate**
-    button.
-4. Select a certificate in the **Select Certificate**
-    dialog.
-5. Click **OK**
-    to return to the **Configure STARTTLS Interface**
-    dialog.
-6. When the certificate has been configured, accept all other defaults, and click **OK**
-    to add the incoming STARTTLS interface.
+1. Right-click the **SMTP** Services node, and select **Add Interface** > **STARTTLS**.
+2. Enter a **Port** (for example, `8026`). This is the port on which the API Gateway’s incoming SMTP traffic is accepted. You can enter any port that is not already in use.
+3. Because STARTTLS has the potential to be upgraded to a secure connection, you must configure a trusted certificate. Click the **X.509 Certificate** button.
+4. Select a certificate in the **Select Certificate** dialog.
+5. Click **OK** to return to the **Configure STARTTLS Interface** dialog.
+6. When the certificate has been configured, accept all other defaults, and click **OK** to add the incoming STARTTLS interface.
 
 When the SMTP services and STARTTLS client interface have been configured, you must deploy the changes to the API Gateway.
 
@@ -362,31 +269,15 @@ To configure a STARTTLS outgoing server in your Thunderbird client, perform the 
 
 1. Launch the Thunderbird email client.
 2. From the main menu, select **Tools** > **Account Settings**.
-3. Expand the **Local Folders**
-    tree node in the left pane.
-4. Select the **Outgoing Server**
-    node to create a new outgoing server configuration.
-5. Click **Add**
-    to display the **SMTP Server**
-    dialog.
-6. Enter `Axway API Gateway [STARTTLS]`
-    in the **Description**
-    field.
-7. Enter `localhost`
-    (or the IP Address of the machine on which the API Gateway service is running) in the **Server Name**
-    field.
-8. Enter `8026`
-    in the **Port**
-    field. This sends SMTP traffic to the STARTTLS interface configured above, so the ports must match.
-9. Select `STARTTLS`
-    from the **Connection security**
-    drop-down list. Traffic on this connection may be upgraded to secure during the SMTP conversation.
-10.Select `Normal Password`
-    from the **Authentication method**
-    drop-down list. This indicates that Authentication is to be performed.
-11.Enter a valid Gmail user-name for the **User Name**.
-12.Click **OK**
-    to add the new outgoing server configuration.
+3. Expand the **Local Folders** tree node in the left pane.
+4. Select the **Outgoing Server** node to create a new outgoing server configuration.
+5. Click **Add** to display the **SMTP Server** dialog.
+6. Enter `Axway API Gateway [STARTTLS]` in the **Description** field.
+7. Enter `localhost` (or the IP Address of the machine on which the API Gateway service is running) in the **Server Name** field.
+8. Enter `8026` in the **Port** field. This sends SMTP traffic to the STARTTLS interface configured above, so the ports must match.
+9. Select `STARTTLS`     from the **Connection security**     drop-down list. Traffic on this connection may be upgraded to secure during the SMTP conversation.
+   10.Select `Normal Password`     from the **Authentication method**     drop-down list. This indicates that Authentication is to be performed.
+   11.Enter a valid Gmail user-name for the **User Name**. 12.Click **OK**     to add the new outgoing server configuration.
 
 ### Configure certificates in Thunderbird
 
@@ -395,31 +286,21 @@ To enable Thunderbird to successfully negotiate the STARTTLS conversation with t
 To configure a STARTTLS outgoing server in your Thunderbird client, perform the following steps:
 
 1. From the Thunderbird main menu, select **Tools** > **Options**.
-2. Select the **Certificates**
-    tab.
-3. Click the **View Certificates**
-    button, to display the **Certificate Manager**
-    dialog.
+2. Select the **Certificates** tab.
+3. Click the **View Certificates** button, to display the **Certificate Manager** dialog.
 4. Click **Import**, and import the appropriate CA certificate.
-5. Click **OK**
-    when finished.
+5. Click **OK** when finished.
 
 ### Test the STARTTLS client interface
 
  To test the STARTTLS client interface using Thunderbird, perform the following steps:
 
 1. Launch the Thunderbird email client, and create a new mail message.
-2. Enter a valid Gmail address in the **To**
-    field.
-3. Enter `API Gateway Test`
-    as the **Subject**.
-4. Enter `This mail has been sent using Axway API Gateway`
-    in the mail body.
-5. To specify the appropriate outgoing mail server, select **Tools** > **Account Settings**
-    from the main menu.
-6. Select `Axway API Gateway [STARTTLS] - localhost`
-    from the **Outgoing Server**
-    drop-down list.
+2. Enter a valid Gmail address in the **To** field.
+3. Enter `API Gateway Test` as the **Subject**.
+4. Enter `This mail has been sent using Axway API Gateway` in the mail body.
+5. To specify the appropriate outgoing mail server, select **Tools** > **Account Settings** from the main menu.
+6. Select `Axway API Gateway [STARTTLS] - localhost` from the **Outgoing Server** drop-down list.
 7. Click **OK**.
 8. Send the mail.
 

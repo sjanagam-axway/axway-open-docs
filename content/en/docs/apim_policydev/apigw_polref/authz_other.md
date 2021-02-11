@@ -1,9 +1,9 @@
 {
 "title": "Additional authorization filters",
-"linkTitle": "Additional authorization filters",
-"weight": 45,
-"date": "2019-10-17",
-"description": "Additional authorization filters, including attribute authorization, Axway Passport, SAML, and SAML PDP."
+  "linkTitle": "Additional authorization filters",
+  "weight": 45,
+  "date": "2019-10-17",
+  "description": "Additional authorization filters, including attribute authorization, Axway Passport, SAML, and SAML PDP."
 }
 
 ## Attribute authorization filter
@@ -605,5 +605,4 @@ dialog. The new action bits are then available for selection in the table on the
 **Tivoli Configuration Files**:
 A Tivoli configuration file that contains all the required connection details is associated with a particular API Gateway instance. Click **Settings** to display the **Tivoli Configuration** dialog.
 
-On the **Tivoli Configuration** dialog, select the API Gateway instance whose connection details you want to configure, then follow the steps as outlined in the
-[API Gateway Authentication and Authorization Integration Guide](/docs/apigtw_auth_auth/).
+On the **Tivoli Configuration** dialog, select the API Gateway instance whose connection details you want to configure. For more information see, [Integrate with Identity Management servers](/docs/apigtw_auth_auth/).
