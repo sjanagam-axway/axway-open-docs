@@ -20,10 +20,10 @@ An endpoint can be published to catalog in two ways.
 * **Title** represents a friendly name for the catalog item. The title will be displayed first and is searchable but does not need to be unique.
 * **Logical Name** represents the unique id for the catalog item and must be unique within the scope of the environment. The logical name is referenced in any dependencies of the Catalog item.
 * **Description** is limited to 1000 characters.
-* **State** 
-* **Visibility**
-* **Version Name**
-* **Endpoint Name** 
+* **State** Published endpoints will be available for developers and consumers, where as Unpublished endpoints are only available for developers.
+* **Visibility** Public endpoints will be visible to the entire organization, where as Restricted endpoints will be visible only to the owning team.  
+* **Version Name** Name of the version being to which endpoint belongs to.
+* **Endpoint Name** Name of the endpoint being published.
 
 
 ### Errors and debugging
