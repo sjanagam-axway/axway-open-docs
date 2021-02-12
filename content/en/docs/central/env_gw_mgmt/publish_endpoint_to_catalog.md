@@ -3,7 +3,7 @@ title: Publish an endpoint to Unified Catalog
 linkTitle: Publish an endpoint to Unified Catalog
 weight: 40
 date: 2021-02-11
-description: Learn how to publish and endpoint to Unified Catalog.
+description: Learn how to publish an endpoint to Unified Catalog.
 ---
 
 ## Publish an endpoint to Unified Catalog
