@@ -8,7 +8,15 @@ description: Learn how to publish an endpoint to Unified Catalog.
 
 ## Publish an endpoint to Unified Catalog
 
+Before you publish an endpoint to catalog, you need to [add an endpoint to the API service](/docs/central/env_gw_mgmt/add_endpoints).
 
+1. From the details page of your service, within the **Endpoints** tab select the **Publish** button from the actions menu of the endpoint you wish to publish.
+2. Manage your endpoint to be published to Unified Catalog:
+   * **State** Published endpoints will be available for developers and consumers, where as Unpublished endpoints are only available for developers.
+   * **Visibility** Public endpoints will be visible to the entire organization, where as Restricted endpoints will be visible only to the owning team.  
+   * **Version Name** Prefilled name of the version of service to which the endpoint belongs to.
+   * **Endpoint Name** Prefilled name of the endpoint being published.
+2. Click **Save**.
 
 > If you want to publish an endpoint to Unified Catalog using the Amplify Central CLI, please refer to these [docs](/docs/central/cli_central/cli_publish) instead.
 
