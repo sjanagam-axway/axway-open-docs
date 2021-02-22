@@ -16,7 +16,7 @@ Before adding an endpoint, you need to [add a service](/docs/central/env_gw_mgmt
     * **Host**: The domain name or IP address of the API service.
     * **Port**: The port number where the API service is exposed.
     * **Basepath**: The path relative to the host where the API service is deployed.
-2. Click **Save**.
+3. Click **Save**.
 
 > If you want to add an endpoint using the Amplify Central CLI, please refer to these [docs](/docs/central/cli_central/cli_publish) instead.
   
