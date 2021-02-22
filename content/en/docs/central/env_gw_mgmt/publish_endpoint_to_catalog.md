@@ -8,7 +8,7 @@ description: Learn how to publish an API service endpoint to Unified Catalog.
 
 ## Publish an endpoint to Unified Catalog
 
-API service endpoints can be published to Unified Catalog, to make them available to developers and consumers within the team or across the organization.
+API service endpoints can be published to Unified Catalog, to make them available to developers and consumers within the team or across the organization to consumer.
 
 Before you publish an endpoint to catalog, you need to [add an endpoint to the API service](/docs/central/env_gw_mgmt/add_endpoints).
 
