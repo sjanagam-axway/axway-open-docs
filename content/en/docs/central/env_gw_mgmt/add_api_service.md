@@ -5,21 +5,22 @@ weight: 20
 date: 2021-02-09
 description: Learn how to create an API service asset on your environment.
 ---
-
 ## Add an API service
 
 Follow these steps to create an API service in your environment:
 
 1. From the details page of your environment, click the plus (+) button located at the top right of the **Activity Dashboard** section.
 2. Click **Upload a file** or **Fetch from URL** to define the API specification.
-3. Confirm the information about your API service:
-    * **Title**: Enter a descriptive name. The title is searchable, but it does not need to be unique.
-    * **Logical Name**: Enter an ID for the service. The ID must be unique within the scope of the environment. The logical name is referenced in any dependencies of the API service.
-    * **Description**: Limited to 1000 characters.
-    * **Tags**: Used to group assets, making it easier and faster to find them.
-    * **Attributes**: Key and value pairs used for extending functionality and integrations with third-party systems.
-    * **API Service Image**: A visual aid when looking through the list of API services.
-4. Click **Save**.
+3. The API Service information, where possible, will be extracted from the uploaded specification file.
+4. Confirm the information about your API service:
+
+   * **Title**: Enter a descriptive name. The title is searchable, but it does not need to be unique.
+   * **Logical Name**: Enter an ID for the service. The ID must be unique within the scope of the environment. The logical name is referenced in any dependencies of the API service.
+   * **Description**: Limited to 1000 characters.
+   * **Tags**: Used to group assets, making it easier and faster to find them.
+   * **Attributes**: Key and value pairs used for extending functionality and integrations with third-party systems.
+   * **API Service Image**: A visual aid when looking through the list of API services.
+5. Click **Save**.
 
 To learn how to add an API service using the Axway Central CLI, see [Build and manage API services in your environments](/docs/central/cli_central/cli_apiservices).
 
@@ -29,14 +30,14 @@ You can define the API service specification by uploading a file or by fetching 
 
 The following table shows the accepted file extensions listed by accepted file type versus service specification type:
 
-|           |   OAS2   |           |   OAS3   |           | Protobuf |           |   WSDL   |           |
-| --------- | :------: | :-------: | :------: | :-------: | :------: | :-------: | :------: | :-------: |
+|           | OAS2     |           | OAS3     |           | Protobuf |           | WSDL     |           |
+| --------- | -------- | --------- | -------- | --------- | -------- | --------- | -------- | --------- |
 | File Type | Expected | Supported | Expected | Supported | Expected | Supported | Expected | Supported |
-| .json     |   YES    |    YES    |   YES    |    YES    |    NO    |    NO     |    NO    |    NO     |
-| .yml/yaml |   YES    |    NO     |   YES    |    NO     |    NO    |    NO     |    NO    |    NO     |
-| .wsdl     |    NO    |    NO     |    NO    |    NO     |    NO    |    NO     |   YES    |    YES    |
-| .proto    |    NO    |    NO     |    NO    |    NO     |   YES    |    YES    |    NO    |    NO     |
-| .xml      |    NO    |    NO     |    NO    |    NO     |    NO    |    NO     |    NO    |    YES    |
+| .json     | YES      | YES       | YES      | YES       | NO       | NO        | NO       | NO        |
+| .yml/yaml | YES      | NO        | YES      | NO        | NO       | NO        | NO       | NO        |
+| .wsdl     | NO       | NO        | NO       | NO        | NO       | NO        | YES      | YES       |
+| .proto    | NO       | NO        | NO       | NO        | YES      | YES       | NO       | NO        |
+| .xml      | NO       | NO        | NO       | NO        | NO       | NO        | NO       | YES       |
 
 You can assign any uploaded specification file as an unstructured specification type. This is useful if your specification type is not officially supported.
 
